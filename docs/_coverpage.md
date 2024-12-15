@@ -6,7 +6,7 @@
 
 > 一个简单的docsify示例
 
-- 让写文档更简单~by王多余
+- 让写文档更简单——by<span style="color:#287eff">王多余</span>
 
 [开始](#docsify)
 [GitHub](https://github.com/docsifyjs/docsify/)

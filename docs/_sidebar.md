@@ -2,6 +2,5 @@
 
 - 开始
 
-  - [快速开始](quickstart.md)
-  - [添加页面](adding-pages.md)
-  - [封面页](cover.md)
+  - [快速搭建](quickstart.md)
+  - [完整搭建](quickstart.md)
