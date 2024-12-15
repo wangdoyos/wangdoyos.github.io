@@ -18,8 +18,6 @@
 
 主页地址为：https://github.com/wangdoyos ，xxx就为 wangdoyos，
 
-> [!IMPORTANT]
->
 > **这里一定要按格式配置否则不生效！**
 
 ## 设置pages
@@ -29,4 +27,6 @@
 ![github页面](_media/img_3.png)
 
 在页面中选择你的分支和存储文档的文件夹，这里我的是main分支，/docs文件夹下，配置好后就可以通过网址 https://xxx.github.io 来访问你的页面
+
+## 自定义域名
 
