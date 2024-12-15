@@ -2,9 +2,9 @@
 
 ![logo](_media/w.svg)
 
-# docsify <small>4.13.0</small>
+# 王多余的文档示例
 
-> 一个简单的示例
+> 一个简单的docsify示例
 
 - 让写文档更简单
 

@@ -17,14 +17,10 @@ Docsify动态生成文档网站。与GitBook不同，它不生成静态html文�
 - 有用的插件API
 - 支持Emoji
 
-## 案例
+## 交流
 
-点击 [查看案例](https://github.com/docsifyjs/awesome-docsify#showcase) 查看使用docsify的例子.
+- 本文档示例由王多余编写，欢迎交流。
 
-## 捐赠
+![公众号](_media/img.png)
 
-如果你认为docsify对你有帮助，或者我的工作有价值，请考虑捐赠。如果你能帮助我，我很高兴 [买一杯咖啡](https://github.com/QingWei-Li/donate). ❤️
 
-## 社区
-
-用户和开发团队通常处于 [Discord](https://discord.gg/3NwKFyR).
