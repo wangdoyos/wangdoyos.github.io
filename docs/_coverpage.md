@@ -6,7 +6,7 @@
 
 > 一个简单的docsify示例
 
-- 让写文档更简单——by <a href="https://github.com/wangdoyos" style="color:#287eff">王多余</a>
+- 让写文档更简单——by <a target="_blank" href="https://github.com/wangdoyos" style="color:#287eff">王多余</a>
 
 [开始](#docsify)
 [GitHub](https://github.com/docsifyjs/docsify/)
