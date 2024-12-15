@@ -10,7 +10,7 @@ Docsify能够动态生成文档网站。
 
 你需要做的只是编写markdown文件，并将其推送到github上，github页面会自动构建并运行，动态更新你的网站。
 
-本教程提供 [快速搭建](quickstart.md) 和 [完整搭建](quickstart.md) 两种方式， [快速搭建](quickstart.md) 中可以使用我配置好的半成品，直接fork到你的github使用即可。
+本教程提供 [快速搭建](quickstart.md) 和 [完整搭建](quickstart.md) 两种方式，[快速搭建](quickstart.md) 中可以使用我配置好的半成品，直接fork到你的github使用即可。
 
 ## 特性
 
