@@ -4,9 +4,13 @@
 
 ## 它是什么
 
-Docsify动态生成文档网站。与GitBook不同，它不生成静态html文件，而是会自动加载和解析你的Markdown文件，并将它们显示为一个网站. 要开始使用它，您需要做的就是创建一个 `index.html` and [将其部署在GitHub页面上](deploy.md).
+Docsify能够动态生成文档网站。
 
-点击 [快速开始](quickstart.md) 查看更多内容.
+与GitBook不同，它不生成静态html文件，而是会自动加载和解析你的markdown文件，并将它们以一个网站的形式进行展示。
+
+你需要做的只是编写markdown文件，并将其推送到github上，github页面会自动构建并运行，动态更新你的网站。
+
+本教程提供 [快速搭建](quickstart.md) 和 [完整搭建](quickstart.md) 两种方式， [快速搭建](quickstart.md) 中可以使用我配置好的半成品，直接fork到你的github使用即可。
 
 ## 特性
 
@@ -22,5 +26,4 @@ Docsify动态生成文档网站。与GitBook不同，它不生成静态html文�
 - 本文档示例由王多余编写，欢迎交流。
 
 ![公众号](_media/img.png)
-
 

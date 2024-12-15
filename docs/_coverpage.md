@@ -2,11 +2,11 @@
 
 ![logo](_media/w.svg)
 
-# 王多余的文档示例
+# docsify搭建文档网站教程
 
 > 一个简单的docsify示例
 
-- 让写文档更简单
+- 让写文档更简单~by王多余
 
 [开始](#docsify)
 [GitHub](https://github.com/docsifyjs/docsify/)
