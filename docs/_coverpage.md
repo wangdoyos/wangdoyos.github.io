@@ -1,6 +1,6 @@
 <!-- markdownlint-disable first-line-h1 -->
 
-![logo](_media/icon.svg)
+![logo](../_media/w.svg)
 
 # docsify <small>4.13.0</small>
 
