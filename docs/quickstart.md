@@ -16,9 +16,9 @@
 
 在红框位置修改你的仓库名称，名称必须为 xxx.github.io 格式，其中 xxx 为你的github个人主页链接中的名称部分，如我的github
 
-主页地址为：https://github.com/wangdoyos ，xxx就为 wangdoyos，
-> [!Tip]
-> **这里一定要按格式配置否则不生效!**
+主页地址为：https://github.com/wangdoyos ，xxx就为 wangdoyos
+
+!> **这里一定要按格式配置否则不生效!**
 
 ## 设置pages
 
@@ -32,9 +32,7 @@
 
 在页面底部的 Custom domain 配置项的输入框中，填写你自己的域名，点击save。Enforce HTTPS建议勾选，勾选后你的网站只能通过HTTPS协议访问到。
 
-> [!Tip]
-> **注意在你的域名服务商网站提前配好域名解析，CNAME指定到你的github域名。否则不生效！**
-> 
+!> **注意在你的域名服务商网站提前配好域名解析，CNAME指定到你的github域名。否则不生效！**
 
 ![github页面](_media/img_4.png)
 
