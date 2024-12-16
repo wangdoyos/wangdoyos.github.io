@@ -8,6 +8,21 @@
 
 点击右上角的fork，将示例仓库复制到你的github空间下
 
+## 项目结构详解
+
+```text
+.
+└── docs
+    └── _media            图片文件夹
+    ├── .nojekyll         防止 GitHub Pages 忽略下划线开头的文件
+    ├── _coverpage.md     网站封面页
+    ├── _navbar.md        右上方导航栏
+    ├── _sidebar.md       左侧目录
+    ├── index.html        docsify默认渲染页面
+    ├── quickstart.md     快速搭建页
+    ├── README.md         网站首页
+```
+
 ## 修改仓库名
 
 进入到你刚fork的github仓库中，点击上面的settings选项卡
