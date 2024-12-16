@@ -25,5 +25,5 @@ Docsify能够动态生成文档网站。
 
 - 本文档示例由王多余编写，欢迎交流。
 
-![公众号](_media/img.png)
+<img src="_media/img.png" alt="公众号" style="zoom:50%;" />
 
