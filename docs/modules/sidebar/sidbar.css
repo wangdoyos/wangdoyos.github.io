@@ -1,0 +1,11 @@
+.sidebar-title {
+    color: inherit;
+    font-weight: 700;
+    font-size: 1.1em;
+}
+
+.sidebar-nav a {
+    /* 侧边栏链接不展示下划线 */
+    text-decoration: none !important;
+
+}

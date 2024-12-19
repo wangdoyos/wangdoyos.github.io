@@ -1,0 +1,69 @@
+@import url('../prism/themes/prism-one-dark.css');
+@import url('../prism/plugins/toolbar/prism-toolbar.css');
+
+pre {
+    border-radius: 10px !important;
+    box-shadow: rgba(0, 0, 0, 0.55) 0px 2px 10px;
+    background: #282c34 !important;
+}
+
+pre code {
+    /* 宽度超出时展示横向滚动条 */
+    overflow-x: auto !important;
+    color: #abb2bf !important;
+    background: #282c34 !important;
+    padding-top: 10px !important;
+}
+
+.pre-mac {
+    position: relative;
+    top: -10px;
+    left: -5px;
+    z-index: 999;
+    display: inline-block;
+}
+
+.pre-mac>span {
+    float: left;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.pre-mac>span:nth-child(1) {
+    background: red;
+}
+
+.pre-mac>span:nth-child(2) {
+    background: sandybrown;
+}
+
+.pre-mac>span:nth-child(3) {
+    background: limegreen;
+}
+
+.markdown-section pre:after {
+    font-size: 0.8rem !important;
+    right: 70px;
+}
+
+.copy-to-clipboard-button {
+    color: white !important;
+    width: 65px !important;
+    font-size: 11px !important;
+    top: -2px;
+    right: -5px;
+    position: relative;
+}
+
+.toolbar {
+    /* 复制按钮不透明度为100% */
+    opacity: 1 !important;
+}
+
+.copy-icon {
+    width: 12px;
+    top: 2px;
+    position: relative;
+}
