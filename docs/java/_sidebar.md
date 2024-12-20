@@ -4,6 +4,7 @@
   - [使用caffeine做本地缓存](/java/code-demo/使用caffeine做本地缓存.md)
   - [使用Function分配相似逻辑处理器](/java/code-demo/使用Function分配相似逻辑处理器.md)
   - [使用Optional避免空指针异常](/java/code-demo/使用Optional避免空指针异常.md)
+  - [Springboot项目跨域配置](/java/code-demo/Springboot项目跨域配置.md)
 - <span class="sidebar-title">设计模式</span>
   - [责任链模式—过滤器链](/java/design-pattern/责任链模式—过滤器链.md)
   - [策略模式—广告价格策略分配](/java/design-pattern/策略模式—广告价格策略分配.md)

@@ -15,10 +15,10 @@ Java NIO（New IO）是从Java 1.4版本开始引入的一个新的IO API，可�
 IO：
 
 
-<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657633875429-35e95db1-7aef-4d9b-9051-e784a5abfd50.png" referrerpolicy="no-referrer">
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657633875429-35e95db1-7aef-4d9b-9051-e784a5abfd50.png" width="50%" referrerpolicy="no-referrer">
 NIO：
 
-<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657633875681-1c132e1d-a4bb-40fe-82fa-c299b8b8304f.png" referrerpolicy="no-referrer">
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657633875681-1c132e1d-a4bb-40fe-82fa-c299b8b8304f.png" width="50%" referrerpolicy="no-referrer">
 
 
 ## 3 通道和缓冲区
@@ -105,8 +105,8 @@ put(int index, byte b)：将指定字节写入缓冲区的索引位置(不会移
 （2）非直接缓冲区数据传输快，但是耗费资源高，且当数据写入到操作系统物理内存中之后，什么时候往磁盘内存储完全由操作系统决定。
 
 <font style="color:#FF0000;">（3）图例</font>
-<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657633876206-c132eb70-87c4-4db8-b364-2c64a4395ac7.png" referrerpolicy="no-referrer">
-<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657633876541-5585f23a-70b5-4706-9c36-f7cb9be7264e.png" referrerpolicy="no-referrer">
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657633876206-c132eb70-87c4-4db8-b364-2c64a4395ac7.png" width="50%" referrerpolicy="no-referrer">
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657633876541-5585f23a-70b5-4706-9c36-f7cb9be7264e.png" width="50%" referrerpolicy="no-referrer">
 
 9. 代码示例
 
@@ -254,9 +254,9 @@ System.out.println(buf.limit());//1024
 ## 6 通道
 1. 通道（Channel）：由 java.nio.channels 包定义的。Channel 表示 IO 源与目标打开的连接。Channel 类似于传统的“流”。只不过 Channel本身不能直接访问数据，Channel 只能与Buffer 进行交互。
 2. 图例：
-<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657633876916-5ed2b2cd-d7fa-48af-9fd7-e45d6a28d6f2.png" referrerpolicy="no-referrer">
-<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657633877345-fa95e6b1-6ce6-422d-ac74-eff42ec67e42.png" referrerpolicy="no-referrer">
-<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657633877663-c3dfd9c4-71f0-461e-96e8-e116d05887ce.png" referrerpolicy="no-referrer">
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657633876916-5ed2b2cd-d7fa-48af-9fd7-e45d6a28d6f2.png" width="50%" referrerpolicy="no-referrer">
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657633877345-fa95e6b1-6ce6-422d-ac74-eff42ec67e42.png" width="50%" referrerpolicy="no-referrer">
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657633877663-c3dfd9c4-71f0-461e-96e8-e116d05887ce.png" width="50%" referrerpolicy="no-referrer">
 
 3. Java 为Channel 接口提供的最主要实现类如下：
 
@@ -919,7 +919,7 @@ public class TestNonBlockingNIO {
 
 （1）Java NIO 管道是2个线程之间的单向数据连接。Pipe有一个source通道和一个sink通道。数据会被写到sink通道，从source通道读取。
 
-<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657633878732-e071d673-5a64-40cc-a628-893599ba52d6.png" referrerpolicy="no-referrer">
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657633878732-e071d673-5a64-40cc-a628-893599ba52d6.png"  referrerpolicy="no-referrer">
 
 （2）代码示例：
 

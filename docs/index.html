@@ -21,6 +21,7 @@
       color: var(--theme-color, #42b983);
       text-decoration: none !important;
     }
+
     .cover {
       z-index: 999;
     }
@@ -34,7 +35,7 @@
       name: 'Blog',
       toc: {
         scope: '.markdown-section',
-        headings: 'h1, h2, h3, h4, h5',
+        headings: 'h1, h2, h3,h4',
         title: '章节列表',
       },
       alias: {
@@ -70,7 +71,16 @@
             function (html) {
               // 初始化mac风格代码高亮
               initMacStyle();
+              // 初始化复制代码按钮
               initCopyButton();
+              // 初始化打字机效果
+              const options = {
+                strings: ["王多余的进阶之路", "一个全干开发工程师"],
+                typeSpeed: 50,
+                backSpeed: 30,
+                loop: true
+              };
+              const typed = new Typed("#typed-title", options);
             }
           );
           hook.doneEach(function () {
@@ -95,6 +105,7 @@
 
   <script src="./modules/prism/plugins/toolbar/prism-toolbar.js"></script>
   <script src="./modules/prism/plugins/copy-to-clipboard/prism-copy-to-clipboard.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
 </body>
 
 </html>

@@ -2,9 +2,7 @@
 
 ![logo](_media/w.svg)
 
-# 王多余的进阶之路
-
-> 一个全干开发工程师
+# <span id="typed-title"></span>
 
 - to <a target="_blank" href="https://github.com/wangdoyos" style="color:#287eff">王多余</a>
 
