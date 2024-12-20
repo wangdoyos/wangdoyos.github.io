@@ -5,4 +5,4 @@
   - [Python](/python/Python.md)
 
 - <span class="title">Spring</span> <img src="_media/down.svg" class="nav-icon" />
-  - [Spring6详解](/spring/spring6/Spring6-1.md)
+  - [Spring6详解](/spring/spring6/spring6-1.md)
