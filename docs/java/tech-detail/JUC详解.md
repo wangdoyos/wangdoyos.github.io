@@ -1125,3 +1125,547 @@ public CopyOnWriteArraySet() {
 }
 ```
 
+### 5.5 Map并法修改异常
+
+代码示例：
+
+```java
+public class ContainerNotSafeDemo {
+    public static void main(String[] args) {
+        Map<String, String> map = new HashMap();
+        for (int i = 1; i <= 30; i++) {
+            int finalI = i;
+            new Thread(() -> {
+                map.put(Thread.currentThread().getName(), finalI + "");
+                System.out.println(map);
+            }, String.valueOf(i)).start();
+        }
+    }
+}
+```
+
+运行结果：
+
+<img src="https://cdn.nlark.com/yuque/0/2024/png/23116580/1735024952712-ed8cebeb-fe8d-4f3a-860c-9d2f60c61050.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_1500%2Climit_0"  referrerpolicy="no-referrer">
+
+### 5.6 Map线程不安全解决办法
+
+#### 5.6.1 使用ConcurrentHashMap
+
+代码示例：
+
+```java
+public class ContainerNotSafeDemo {
+    public static void main(String[] args) {
+        Map<String, String> map = new ConcurrentHashMap<>();
+        for (int i = 1; i <= 30; i++) {
+            int finalI = i;
+            new Thread(() -> {
+                map.put(Thread.currentThread().getName(), finalI + "");
+                System.out.println(map);
+            }, String.valueOf(i)).start();
+        }
+    }
+}
+```
+
+运行结果：
+
+<img src="https://cdn.nlark.com/yuque/0/2024/png/23116580/1735025073280-c2f92d2b-cd9d-410a-be4a-101edb78745c.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_1500%2Climit_0"  referrerpolicy="no-referrer">
+
+#### 5.6.2 使用Collections.synchronizedMap
+
+代码示例：
+
+```java
+public class ContainerNotSafeDemo {
+    public static void main(String[] args) {
+        Map<String, String> map = Collections.synchronizedMap(new HashMap<>());
+        for (int i = 1; i <= 30; i++) {
+            int finalI = i;
+            new Thread(() -> {
+                map.put(Thread.currentThread().getName(), finalI + "");
+                System.out.println(map);
+            }, String.valueOf(i)).start();
+        }
+    }
+}
+```
+
+运行结果：
+
+<img src="https://cdn.nlark.com/yuque/0/2024/png/23116580/1735025265847-8c2c2e2a-8f51-48b2-b236-e880e4c9e4da.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_1500%2Climit_0"  referrerpolicy="no-referrer">
+
+## 六、Java锁
+
+### 6.1 公平锁和非公平锁
+
+#### 6.1.1 公平锁（Fair Lock）
+
+**定义**：
+公平锁的线程获取顺序遵循**先来先服务（FIFO）**的原则，即线程按照请求锁的时间顺序来获得锁。
+
+**特点**：
+
+1. **公平性**：所有线程按时间顺序竞争锁，不会发生“插队”。
+2. **避免饥饿**：没有任何线程会因为长期无法获取锁而被饿死。
+3. **性能较低**：由于需要维护一个队列来保存等待线程，并在释放锁时通知队列中的下一个线程，开销较大。
+
+**适用场景**：
+
+- 当程序对响应时间要求较高，且希望多个线程公平竞争资源时适合使用公平锁。
+
+**实现方式**：
+在Java中，通过ReentrantLock的构造函数指定true即可创建公平锁：
+
+```java
+ReentrantLock fairLock = new ReentrantLock(true);
+```
+
+#### 6.1.2 非公平锁（Non-Fair Lock）
+
+**定义**：
+非公平锁不保证线程获取锁的顺序，任何线程都可以直接尝试获取锁，可能会“插队”。
+
+**特点**：
+
+1. **性能较高**：由于无需维护队列，线程可以直接竞争锁，减少了上下文切换的开销。
+2. **可能导致线程饥饿**：某些线程可能长时间无法获取锁。
+3. **更适合高并发场景**：在实际使用中，非公平锁通常能够提供更好的吞吐量。
+
+**适用场景**：
+
+- 高并发的场景中，性能优先于公平性时，使用非公平锁。
+
+**实现方式**：
+在Java中，通过ReentrantLock的默认构造函数或传入false即可创建非公平锁：
+
+```java
+ReentrantLock nonFairLock = new ReentrantLock(); // 默认非公平
+ReentrantLock nonFairLockExplicit = new ReentrantLock(false);
+```
+
+?> **synchronized也是一种非公平锁**
+
+#### 6.1.3 公平锁与非公平锁的对比
+
+| 特性         | 公平锁                           | 非公平锁             |
+| ------------ | -------------------------------- | -------------------- |
+| 获取锁顺序   | 按照线程请求锁的时间顺序         | 无序，可能“插队”     |
+| 性能         | 较低                             | 较高                 |
+| 线程饥饿风险 | 无饥饿                           | 存在饥饿风险         |
+| 使用场景     | 响应时间敏感、公平性要求高的场景 | 高并发场景，性能优先 |
+
+### 6.2 可重入锁（递归锁）
+
+#### 6.2.1 什么是可重入锁
+
+**定义**：
+可重入锁是指线程在持有锁的情况下，可以再次获取该锁，并在释放锁时只需与获取次数相同的次数释放即可。
+
+**解释**：
+如果一个线程已经获得了锁，它再次请求该锁时会自动成功，并将锁的计数器加1；每次释放锁时，计数器减1，直到计数器为0时真正释放锁。
+
+**关键点**：
+
+- 同一个线程可以多次进入受锁保护的代码块。
+- 避免了线程死锁问题（特别是在调用自身方法的递归场景中）。
+
+#### 6.2.2 Java中可重入锁的实现
+
+Java中的**synchronized关键字**和**ReentrantLock类**都提供了可重入锁的特性。
+
+**a. synchronized**
+
+synchronized隐式支持可重入性
+
+示例代码：
+
+```java
+class Phone {
+    public synchronized void senSMS() throws Exception {
+        System.out.println(Thread.currentThread().getName() + "\t 执行 sendSMS（）");
+        sendEmail();
+    }
+
+    public synchronized void sendEmail() throws Exception {
+        System.out.println(Thread.currentThread().getName() + "\t 执行 sendEmail（）");
+
+    }
+}
+
+public class ReenterLockDemo {
+    public static void main(String[] args) {
+        Phone phone = new Phone();
+        new Thread(() -> {
+            try {
+                phone.senSMS();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }, "t1").start();
+
+        new Thread(() -> {
+            try {
+                phone.senSMS();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }, "t2").start();
+    }
+}
+```
+
+运行结果：
+
+<img src="https://cdn.nlark.com/yuque/0/2024/png/23116580/1735031257279-08dcd28e-17f5-406d-8839-55a05c01fd4f.png?x-oss-process=image%2Fformat%2Cwebp"  referrerpolicy="no-referrer">
+
+**b. ReentrantLock**
+
+ReentrantLock类是Java中显式锁的一种，默认也是可重入锁。
+
+代码示例：
+
+```java
+class Phone implements Runnable {
+    Lock lock = new ReentrantLock();
+
+    @Override
+    public void run() {
+        get();
+    }
+
+    public void get() {
+        lock.lock();
+        try {
+            System.out.println(Thread.currentThread().getName() + "\t 执行 get（）");
+            set();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public void set() {
+        lock.lock();
+        try {
+            System.out.println(Thread.currentThread().getName() + "\t 执行 set（）");
+        } finally {
+            lock.unlock();
+        }
+    }
+}
+
+public class ReenterLockDemo {
+    public static void main(String[] args) {
+        Phone phone = new Phone();
+        Thread t3 = new Thread(phone, "t3");
+        Thread t4 = new Thread(phone, "t4");
+        t3.start();
+        t4.start();
+    }
+}
+```
+
+运行结果：
+
+<img src="https://cdn.nlark.com/yuque/0/2024/png/23116580/1735032748292-17ebfa50-f5a2-4c0a-9d5a-d65ee78f55a5.png?x-oss-process=image%2Fformat%2Cwebp"  referrerpolicy="no-referrer">
+
+#### 6.2.3 可重入锁的内部机制
+
+**ReentrantLock**通过内部的**计数器**和**线程记录机制**实现可重入性：
+
+1. **计数器**：每次线程成功获取锁时，计数器加1；释放锁时，计数器减1。当计数器为0时，锁才真正释放。
+2. **线程记录**：记录当前持有锁的线程，只有持有锁的线程才能修改计数器。
+
+#### 6.2.4 可重入锁的优点
+
+1. 避免死锁：
+   - 当一个线程在持有锁时调用同一锁保护的方法或递归方法，不需要重新竞争锁。
+2. 递归调用支持：
+   - 对递归算法非常友好，特别是需要嵌套调用的方法。
+3. 灵活性：
+   - 与显式锁（ReentrantLock）结合使用时，支持公平锁、非公平锁、可中断性等高级功能。
+
+#### 6.2.5  可重入锁与非可重入锁的对比
+
+| 特性             | 可重入锁                     | 非可重入锁                 |
+| ---------------- | ---------------------------- | -------------------------- |
+| 获取锁的特性     | 同一线程可多次获取锁         | 同一线程无法重复获取锁     |
+| 实现复杂度       | 较高，需维护计数器和线程信息 | 较低                       |
+| 死锁可能性       | 较低，避免嵌套调用死锁       | 较高，可能在嵌套调用中死锁 |
+| 支持的关键字或类 | synchronized、ReentrantLock  | 无直接支持                 |
+
+### 6.3 自旋锁
+
+#### 6.3.1. 什么是自旋锁
+
+**定义**：
+自旋锁是一种基于**忙等待**的锁实现方式，线程在尝试获取锁时，如果锁被其他线程持有，它会持续循环检查而不是挂起，直到获取到锁或者达到某种终止条件。
+
+**关键点**：
+
+- 忙等待：线程在获取不到锁时，**反复执行空操作**而不进入阻塞状态。
+- 减少上下文切换：避免线程挂起和唤醒的系统开销。
+
+#### 6.3.2. 自旋锁的工作原理
+
+1. 尝试获取锁：线程检查锁的状态（通常是一个标志位，如volatile变量）。
+2. 忙等待：如果锁已被占用，线程反复检查，等待锁释放。
+3. 获取锁成功：一旦锁可用，线程立即占有锁并继续执行。
+
+代码示例：
+
+```java
+public class SpinLockDemo {
+
+    private final AtomicBoolean locked = new AtomicBoolean(false);
+
+    public void lock() {
+        System.out.println(Thread.currentThread().getName() + "\t 尝试获取锁 ");
+        while (!locked.compareAndSet(false, true)) {
+            // 自旋等待
+        }
+        System.out.println(Thread.currentThread().getName() + "\t 已获取锁 ");
+    }
+
+    public void unlock() {
+        System.out.println(Thread.currentThread().getName() + "\t 尝试释放锁 ");
+        // 释放锁
+        locked.set(false);
+        System.out.println(Thread.currentThread().getName() + "\t 已释放锁 ");
+
+    }
+
+
+    public static void main(String[] args) {
+        SpinLockDemo spinLockDemo = new SpinLockDemo();
+        new Thread(() -> {
+            spinLockDemo.lock();
+            //暂停一会线程
+            try {
+                TimeUnit.SECONDS.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            spinLockDemo.unlock();
+        }, "AA").start();
+        //暂停主线程 保证AA线程比BB线程先执行
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        new Thread(() -> {
+            spinLockDemo.lock();
+            spinLockDemo.unlock();
+        }, "BB").start();
+    }
+}
+```
+
+运行结果：
+
+<img src="https://cdn.nlark.com/yuque/0/2024/png/23116580/1735034435128-38e66184-a463-40db-a0e8-e60a2a89de69.png?x-oss-process=image%2Fformat%2Cwebp"  referrerpolicy="no-referrer">
+
+#### 6.3.3 自旋锁的优缺点
+
+**优点**
+
+1. 减少线程上下文切换：线程在等待时不会进入内核态，节省挂起和唤醒的开销。
+2. 高效的短时间锁竞争：当锁持有时间较短时，自旋锁性能优于阻塞锁。
+
+**缺点**
+
+1. 忙等待浪费CPU资源：自旋期间线程会持续占用CPU时间，对系统性能有较大影响。
+2. 不适合高竞争场景：如果锁持有时间较长或线程竞争激烈，自旋锁会导致CPU资源浪费严重。
+3. 死锁风险：如果没有设计好退出机制，自旋锁可能导致线程一直自旋。
+
+#### 6.3.4 自旋锁与传统阻塞锁的对比
+
+| 特性             | 自旋锁                                           | 阻塞锁（如ReentrantLock）                    |
+| ---------------- | ------------------------------------------------ | -------------------------------------------- |
+| 获取不到锁的行为 | 自旋等待，持续占用CPU                            | 线程进入阻塞，释放CPU                        |
+| 性能             | 持锁时间短时效率高                               | 持锁时间长时效率高                           |
+| 系统开销         | 较低（无上下文切换）                             | 较高（上下文切换）                           |
+| 适用场景         | 锁竞争不激烈、锁持有时间较短、实时性要求高的场景 | 竞争激烈、锁持有时间较长、实时性要求低的场景 |
+
+#### 6.3.5 自旋锁的注意事项
+
+1、**避免长时间自旋**：如果锁持有时间长，推荐直接使用阻塞锁。
+
+2、**CPU核心数影响**：自旋锁对多核CPU更友好，单核环境可能会引发性能问题。
+
+3、**高并发场景慎用**：在高并发场景中，过多线程自旋会造成CPU资源浪费，影响系统整体性能。
+
+### 6.4 独占锁/共享锁/互斥锁
+
+#### 6.4.1 独占锁（Exclusive Lock / 写锁）
+
+**定义**：
+
+独占锁是指某一时刻只有一个线程能获取该锁，其它线程必须等待锁释放后才能继续获取。
+它通常用于写操作，确保数据一致性。
+
+**特点**：
+
+1. **独占性**：同一时刻仅允许一个线程持有锁。
+2. **阻塞其它线程**：未获取到锁的线程必须等待。
+3. **写优先**：通常与共享锁（读锁）配合使用时，优先处理写操作。
+
+**实现**：
+
+- Java 中的 ReentrantLock、synchronized 都是典型的独占锁。
+- ReentrantReadWriteLock.WriteLock 也属于独占锁。
+
+
+
+#### 6.4.2 共享锁（Shared Lock / 读锁）
+
+**定义**：
+
+共享锁允许多个线程同时持有锁，可以并发访问共享资源，但这些线程只能进行**读操作**，不能进行写操作。
+
+**特点**：
+
+1. **可并发**：多个线程可以同时持有共享锁。
+2. **读写分离**：共享锁通常用于读操作，与独占锁配合使用。
+3. **不会修改资源**：持有共享锁的线程只能读取资源，不能修改。
+
+**实现**：
+
+- Java 中的 ReentrantReadWriteLock.ReadLock 是共享锁的实现。
+
+#### 6.4.3 互斥锁（Mutex Lock）
+
+**定义**：
+
+互斥锁是线程同步的基本机制，属于独占锁的一种，确保同一时刻只有一个线程访问临界区资源。
+
+**特点**：
+
+1. **排他性**：同一时刻仅一个线程能够持有互斥锁。
+2. **线程安全**：通过互斥锁可以确保线程对共享资源的操作是线程安全的。
+3. **通用性**：适用于所有需要线程同步的场景。
+
+**实现**：
+
+- Java 中的 synchronized 关键字和 ReentrantLock 都可以看作互斥锁的实现。
+
+#### 6.4.4 读写锁的使用
+
+未使用读写锁的代码示例：
+
+```java
+class MyCache {
+    private volatile Map<String, Object> map = new HashMap<>();
+
+    public void put(String key, Object value) {
+        System.out.println(Thread.currentThread().getName() + "\t 正在写入： " + key);
+        //暂停一会线程
+        try {
+            TimeUnit.MILLISECONDS.sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        map.put(key, value);
+        System.out.println(Thread.currentThread().getName() + "\t 写入完成： ");
+    }
+
+    public void get(String key) {
+        System.out.println(Thread.currentThread().getName() + "\t 正在读取： ");
+        //暂停一会线程
+        try {
+            TimeUnit.MILLISECONDS.sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Object result = map.get(key);
+        System.out.println(Thread.currentThread().getName() + "\t 读取完成： " + result);
+    }
+
+}
+
+public class ReadWriteLockDemo {
+    public static void main(String[] args) {
+        MyCache myCache = new MyCache();
+        //五个线程写
+        for (int i = 1; i <= 5; i++) {
+            final int tempInt = i;
+            new Thread(() -> myCache.put(tempInt + "", tempInt + ""), String.valueOf(i)).start();
+        }
+        //五个线程读
+        for (int i = 1; i <= 5; i++) {
+            final int tempInt = i;
+            new Thread(() -> myCache.get(tempInt + ""), String.valueOf(i)).start();
+        }
+    }
+}
+
+```
+
+运行结果：
+
+<img src="https://cdn.nlark.com/yuque/0/2024/png/23116580/1735035638322-2bb39b2a-526f-4086-9b61-ef2019c3c509.png?x-oss-process=image%2Fformat%2Cwebp " referrerpolicy="no-referrer" width="20%">
+
+?> **结论：写操作被中断，一个线程在写的时候，其他线程也在写**
+
+
+
+添加了读写锁的代码案例：
+
+```java
+class MyCache{//资源类
+    private volatile Map<String,Object> map = new HashMap<>();
+    private ReentrantReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+    public void put(String key,Object value){
+        readWriteLock.writeLock().lock();         try {
+            System.out.println(Thread.currentThread().getName()+"\t 正在写入： "+key);
+            //暂停一会线程
+            try {
+                TimeUnit.MILLISECONDS.sleep(300);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            map.put(key,value);
+            System.out.println(Thread.currentThread().getName()+"\t 写入完成： ");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            readWriteLock.writeLock().unlock();         }
+    }
+    public void get(String key){
+        readWriteLock.readLock().lock();         try {
+            System.out.println(Thread.currentThread().getName()+"\t 正在读取： ");
+            //暂停一会线程
+            try {
+                TimeUnit.MILLISECONDS.sleep(300);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Object result = map.get(key);
+            System.out.println(Thread.currentThread().getName()+"\t 读取完成： "+result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            readWriteLock.readLock().unlock();         }
+    }
+
+}
+
+```
+
+运行结果：
+
+<img src="https://cdn.nlark.com/yuque/0/2024/png/23116580/1735036010912-1d2a9042-791a-45d6-b01a-e2176d58e128.png?x-oss-process=image%2Fformat%2Cwebp"  referrerpolicy="no-referrer" width="20%">
+
+?> **结论：加了写锁之后，同时只能有一个线程写入，加了读锁之后，多个线程可以共享读。**
+
+#### 6.4.5 独占锁、共享锁、互斥锁对比
+
+| 特性             | 独占锁（写锁）           | 共享锁（读锁）                  | 互斥锁                       |
+| ---------------- | ------------------------ | ------------------------------- | ---------------------------- |
+| 同时持有线程数   | 仅允许一个线程           | 多个线程可以同时持有            | 仅允许一个线程               |
+| 是否支持并发访问 | 不支持                   | 支持（只读操作）                | 不支持                       |
+| 操作限制         | 可读可写                 | 仅允许读操作                    | 可读可写                     |
+| 实现类           | ReentrantLock / 写锁     | ReentrantReadWriteLock.ReadLock | synchronized / ReentrantLock |
+| 应用场景         | 写操作需要独占资源的场景 | 读操作频繁且需要高并发的场景    | 简单的线程同步               |
