@@ -561,7 +561,7 @@ false	 当前数据: 2019
 
 ### 4.2 CAS底层原理
 
-#### **4.2.1 Java中的CAS实现**
+#### 4.2.1 Java中的CAS实现
 
 Java中通过 **Unsafe类** 和 **java.util.concurrent.atomic包** 提供了CAS操作的支持。常用的CAS工具类包括：
 
@@ -2278,7 +2278,7 @@ public Semaphore(int permits, boolean fair)
 
 ### 9.4 使用场景
 
-#### **9.4.1 限制资源访问的并发线程数**
+#### 9.4.1 限制资源访问的并发线程数
 
 限制同时访问某个资源的线程数量，比如连接池、打印机、数据库连接等。
 
@@ -2333,7 +2333,7 @@ Thread-2 释放 了一个许可
 
 
 
-#### **9.4.2 多线程模拟停车场**
+#### 9.4.2 多线程模拟停车场
 
 模拟一个有固定车位数量的停车场，车辆进入停车场后占用车位，离开后释放车位。
 
@@ -2425,7 +2425,7 @@ public class SemaphoreDemo {
 
 ## 十、阻塞队列
 
-### 10.1 **BlockingQueue** 的定义
+### 10.1 BlockingQueue 的定义
 
 **阻塞队列**是一种线程安全的队列，提供了以下两种阻塞操作：
 
@@ -2453,7 +2453,7 @@ public class SemaphoreDemo {
 
 ------
 
-### 10.2 **BlockingQueue** 的核心方法
+### 10.2 BlockingQueue 的核心方法
 
 #### 10.2.1 方法分类
 
@@ -2485,9 +2485,9 @@ poll()：非阻塞移除操作，队列为空时立即返回 null。
 
 ------
 
-### 10.3 **常见实现类**
+### 10.3 常见实现类
 
-#### **10.3.1 ArrayBlockingQueue**
+#### 10.3.1 ArrayBlockingQueue
 
 1、特性：
 
@@ -2499,7 +2499,7 @@ poll()：非阻塞移除操作，队列为空时立即返回 null。
 
 2、**适用场景**：固定大小的任务池、生产者-消费者模型。
 
-#### **10.3.2 LinkedBlockingQueue**
+#### 10.3.2 LinkedBlockingQueue
 
 1、特性：
 
@@ -2509,7 +2509,7 @@ poll()：非阻塞移除操作，队列为空时立即返回 null。
 
 2、**适用场景**：高吞吐量的任务队列。
 
-#### **10.3.3 PriorityBlockingQueue**
+#### 10.3.3 PriorityBlockingQueue
 
 1、特性：
 
@@ -2521,7 +2521,7 @@ poll()：非阻塞移除操作，队列为空时立即返回 null。
 
 2、**适用场景**：任务优先级调度。
 
-#### **10.3.4 SynchronousQueue**
+#### 10.3.4 SynchronousQueue
 
 1、特性：
 
@@ -2531,7 +2531,7 @@ poll()：非阻塞移除操作，队列为空时立即返回 null。
 
 2、**适用场景**：线程间直接传递数据。
 
-#### **10.3.5 DelayQueue**
+#### 10.3.5 DelayQueue
 
 1、特性：
 
@@ -2541,7 +2541,7 @@ poll()：非阻塞移除操作，队列为空时立即返回 null。
 
 2、**适用场景**：定时任务调度。
 
-### 10.4 **使用场景**
+### 10.4 使用场景
 
 #### 10.4.1 生产者-消费者模型（ArrayBlockingQueue）
 
@@ -2985,7 +2985,7 @@ public class DelayQueueCacheExample {
 
 ------
 
-### 10.5 **BlockingQueue 的优缺点**
+### 10.5 BlockingQueue 的优缺点
 
 **优点**：
 
@@ -3025,3 +3025,622 @@ public class DelayQueueCacheExample {
 
 ## 十一、synchronized与lock有什么区别
 
+### 11.1 定义与概念
+
+- **synchronized**：
+
+  1、 Java 提供的关键字，属于 **Java 内置的锁机制**。
+
+  2、一般用于对代码块或方法加锁，保证多线程访问的原子性和可见性。
+
+  3、是一种**隐式锁**，由 JVM 实现，程序员无需显式操作。
+
+- **Lock**：
+
+  1、是 java.util.concurrent.locks 包中的接口，由 ReentrantLock 等具体类实现。
+
+  2、提供了一种更灵活、更细粒度的锁控制方式。
+
+  3、是一种**显式锁**，需要程序员手动获取和释放。
+
+------
+
+### 11.2 使用方式对比
+
+#### 11.2.1 synchronized 使用示例
+
+```java
+public class SynchronizedExample {
+    private int count = 0;
+
+    public synchronized void increment() {
+        count++;
+    }
+
+    public synchronized int getCount() {
+        return count;
+    }
+}
+```
+
+- 特点：
+
+  直接在方法或代码块上使用。
+
+  锁的获取和释放由 JVM 自动完成。
+
+#### 11.2.2 Lock 使用示例
+
+```java
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class LockExample {
+    private final Lock lock = new ReentrantLock();
+    private int count = 0;
+
+    public void increment() {
+        lock.lock(); // 显式获取锁
+        try {
+            count++;
+        } finally {
+            lock.unlock(); // 显式释放锁
+        }
+    }
+
+    public int getCount() {
+        lock.lock();
+        try {
+            return count;
+        } finally {
+            lock.unlock();
+        }
+    }
+}
+```
+
+- 特点：
+
+  1、必须手动调用 lock.lock() 和 lock.unlock()。
+
+  2、提供了更丰富的锁控制功能。
+
+------
+
+### 11.3 功能与特性对比
+
+| 特性               | synchronized                        | Lock                                 |
+| ------------------ | ----------------------------------- | ------------------------------------ |
+| **锁的类型**       | 内置锁 (隐式锁)                     | 显式锁，由程序员控制                 |
+| **获取与释放**     | 自动获取和释放锁                    | 手动获取和释放锁                     |
+| **中断响应**       | 不响应中断                          | 支持中断 (如 lockInterruptibly)      |
+| **尝试加锁**       | 不支持                              | 支持 (如 tryLock())                  |
+| **公平锁**         | 非公平锁                            | 支持公平锁 (通过 ReentrantLock 实现) |
+| **条件变量支持**   | 不支持                              | 支持 (如 newCondition())             |
+| **性能**           | 较低 (锁升级耗时，但适合轻量级同步) | 较高 (适用于高并发和复杂同步场景)    |
+| **可读性与易用性** | 简单易用                            | 使用复杂，需要手动控制               |
+| **可重入性**       | 支持                                | 支持                                 |
+
+------
+
+### 11.4 优缺点分析
+
+#### 11.4.1 synchronized 的优点
+
+1、简单易用，编码时无需手动控制锁的释放。
+
+2、隐式锁，由 JVM 自动优化，避免死锁的可能性。
+
+3、随着 JVM 的优化 (如偏向锁、轻量级锁、锁消除)，性能较传统实现有明显提高。
+
+#### 11.4.2 synchronized 的缺点
+
+1、功能单一，不支持中断、条件变量等高级功能。
+
+2、仅支持非公平锁，可能导致线程饥饿问题。
+
+3、无法灵活地尝试获取锁，遇到竞争可能直接阻塞。
+
+#### 11.4.3 Lock 的优点
+
+1、更灵活的锁机制：
+
+（1）支持公平锁。
+
+（2）支持可中断锁 (lockInterruptibly)。
+
+（3）支持尝试加锁 (tryLock)。
+
+2、支持条件变量，允许线程间更复杂的同步操作。
+
+3、性能优于 synchronized，特别是在高并发环境中。
+
+#### 11.4.4 Lock 的缺点
+
+1、使用复杂，必须手动获取和释放锁，容易因忘记 unlock 导致死锁。
+
+2、对程序员要求更高，需要正确管理锁的生命周期。
+
+------
+
+### 5. 适用场景对比
+
+| 场景                 | 建议使用机制                    |
+| -------------------- | ------------------------------- |
+| 简单同步操作         | synchronized                    |
+| 高并发、复杂同步     | Lock                            |
+| 需要响应中断         | Lock                            |
+| 需要尝试加锁避免阻塞 | Lock (tryLock)                  |
+| 需要条件变量         | Lock (newCondition)             |
+| 需要公平锁           | Lock (ReentrantLock 的构造函数) |
+
+------
+
+### 6. 性能对比
+
+1、**低竞争场景**：
+
+- synchronized 更高效，因为 JVM 的优化可以减少锁开销。
+
+2、**高竞争场景**：
+
+- Lock 性能更好，因为它提供了更灵活的机制，例如非阻塞锁和公平锁。
+
+
+
+## 十二、Callable接口
+
+### 12.1 Callable 接口概述
+
+- **定义**：
+
+  1、位于 java.util.concurrent 包中。
+
+  2、是一个泛型接口，用于封装可以在另一个线程中运行的任务。
+
+  3、任务执行后返回一个结果，或者抛出一个受检查的异常。
+
+- **方法**：
+
+  V call() throws Exception：用于定义任务逻辑，返回类型为 V，可抛出异常。
+
+------
+
+### 12.2 Callable 与 Runnable 的对比
+
+| 特性     | Callable                            | Runnable                            |
+| -------- | ----------------------------------- | ----------------------------------- |
+| 返回值   | 有返回值，使用泛型 V 表示           | 无返回值，方法签名为 void run()     |
+| 抛出异常 | 支持抛出受检查异常                  | 不支持抛出异常                      |
+| 适配工具 | 结合 Future 或 ExecutorService 使用 | 结合 Thread 或 ExecutorService 使用 |
+
+------
+
+### 12.3 Callable 的基本使用方式
+
+1、实现 Callable 接口，重写 call 方法。
+
+2、将 Callable 任务提交给 ExecutorService。
+
+3、返回一个 Future 对象，通过 Future 获取结果或处理异常。
+
+------
+
+### 12.4 基本代码示例
+
+**计算任务并返回结果**
+
+```java
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+public class CallableExample {
+    public static void main(String[] args) {
+        // 创建线程池
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        // 创建 Callable 任务
+        Callable<Integer> task = () -> {
+            System.out.println("任务运行中...");
+            Thread.sleep(2000); // 模拟耗时操作
+            return 123; // 返回结果
+        };
+        try {
+            // 提交任务并获取 Future
+            Future<Integer> future = executor.submit(task);
+            System.out.println("任务已提交，等待结果...");
+            // 获取任务结果
+            Integer result = future.get();
+            System.out.println("结果: " + result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            executor.shutdown(); // 关闭线程池
+        }
+    }
+}
+```
+
+**运行结果**
+
+```text
+任务已提交，等待结果...
+任务运行中...
+结果: 123
+```
+
+------
+
+### 12.5 典型应用场景
+
+#### 12.5.1 并行计算
+
+**描述**：计算多个子任务的结果，然后合并结果。
+
+**示例代码**：
+
+```java
+import java.util.concurrent.*;
+
+public class ParallelComputation {
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+
+        Callable<Integer> task1 = () -> {
+            Thread.sleep(1000);
+            return 10;
+        };
+
+        Callable<Integer> task2 = () -> {
+            Thread.sleep(2000);
+            return 20;
+        };
+
+        Future<Integer> future1 = executor.submit(task1);
+        Future<Integer> future2 = executor.submit(task2);
+
+        // 获取并合并结果
+        Integer result = future1.get() + future2.get();
+        System.out.println("计算结果: " + result);
+
+        executor.shutdown();
+    }
+}
+```
+
+**运行结果：**
+
+```text
+计算结果: 30
+```
+
+
+
+#### 12.5.2 异步任务处理
+
+**描述**：在后台执行任务，并在需要时获取结果。
+
+**示例代码**：
+
+```java
+import java.util.concurrent.*;
+
+public class AsyncTask {
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+
+        Future<String> future = executor.submit(() -> {
+            Thread.sleep(3000);
+            return "任务执行完毕！";
+        });
+
+        // 主线程可以继续执行其他任务
+        System.out.println("主线程继续执行...");
+
+        // 获取异步任务的结果
+        String result = future.get(); // 阻塞直到结果返回
+        System.out.println("异步任务结果: " + result);
+
+        executor.shutdown();
+    }
+}
+```
+
+**运行结果：**
+
+```text
+主线程继续执行...
+异步任务结果: 任务执行完毕！
+```
+
+
+
+#### 12.5.3 定时任务
+
+**描述**：利用 ScheduledExecutorService 和 Callable 定时执行任务。
+
+**示例代码**：
+
+```java
+import java.util.concurrent.*;
+
+public class ScheduledTask {
+    public static void main(String[] args) {
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
+        Callable<String> task = () -> "定时任务执行完毕";
+
+        ScheduledFuture<String> scheduledFuture = scheduler.schedule(task, 5, TimeUnit.SECONDS);
+
+        try {
+            System.out.println("等待定时任务...");
+            String result = scheduledFuture.get();
+            System.out.println("结果: " + result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            scheduler.shutdown();
+        }
+    }
+}
+```
+
+**运行结果：**
+
+```text
+等待定时任务...
+结果: 定时任务执行完毕
+```
+
+
+
+------
+
+### 12.6 与 CompletionService 结合
+
+**描述**
+
+使用 CompletionService 提交多个 Callable 任务，并按任务完成的顺序获取结果。
+
+**示例代码：**
+
+```java
+import java.util.concurrent.*;
+
+public class CompletionServiceExample {
+    public static void main(String[] args) {
+        ExecutorService executor = Executors.newFixedThreadPool(3);
+        CompletionService<Integer> completionService = new ExecutorCompletionService<>(executor);
+
+        // 提交多个任务
+        for (int i = 0; i < 5; i++) {
+            int value = i;
+            completionService.submit(() -> {
+                Thread.sleep(1000 * value);
+                return value;
+            });
+        }
+
+        // 按任务完成的顺序获取结果
+        for (int i = 0; i < 5; i++) {
+            try {
+                Future<Integer> future = completionService.take(); // 按完成顺序获取
+                System.out.println("Result: " + future.get());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        executor.shutdown();
+    }
+}
+```
+
+**运行结果：**
+
+```text
+结果: 0
+结果: 1
+结果: 2
+结果: 3
+结果: 4
+```
+
+
+
+------
+
+## 十三、FutureTask
+
+### 13.1 FutureTask 的概述
+
+**定义**：
+
+1、位于 java.util.concurrent 包中。
+
+2、实现了 RunnableFuture 接口，RunnableFuture 同时继承了 Runnable 和 Future。
+
+3、既可以作为任务提交给线程执行，又可以通过 Future 方法获取任务的执行结果。
+
+**核心方法**：
+
+1、get()：阻塞直到任务完成并返回结果。
+
+2、cancel(boolean mayInterruptIfRunning)：尝试取消任务。
+
+3、isDone()：判断任务是否已完成。
+
+4、isCancelled()：判断任务是否被取消。
+
+------
+
+### 13.2 构造函数
+
+FutureTask 提供了两个主要构造函数：
+
+1. **基于 Callable**：
+
+   ```java
+   public FutureTask(Callable<V> callable)
+   ```
+
+   接受一个实现了 Callable 接口的任务。
+
+2. **基于 Runnable**：
+
+   ```java
+   public FutureTask(Runnable runnable, V result)
+   ```
+
+   接受一个实现了 Runnable 接口的任务，并指定返回结果 result。
+
+------
+
+### 13.3 FutureTask 的典型使用方式
+
+#### 13.3.1 直接结合 Thread 使用
+
+**代码示例：**
+
+```java
+import java.util.concurrent.Callable;
+import java.util.concurrent.FutureTask;
+
+public class FutureTaskExample {
+    public static void main(String[] args) throws Exception {
+        Callable<Integer> task = () -> {
+            System.out.println("任务正在运行...");
+            Thread.sleep(2000); // 模拟耗时任务
+            return 42; // 返回结果
+        };
+
+        FutureTask<Integer> futureTask = new FutureTask<>(task);
+
+        // 创建线程并执行任务
+        Thread thread = new Thread(futureTask);
+        thread.start();
+
+        System.out.println("主线程做其他任务...");
+
+        // 获取结果（阻塞直到任务完成）
+        Integer result = futureTask.get();
+        System.out.println("结果: " + result);
+    }
+}
+```
+
+**运行结果：**
+
+```text
+主线程做其他任务...
+任务正在运行...
+结果: 42
+```
+
+
+
+------
+
+#### 13.3.2 与线程池结合
+
+**代码示例：**
+
+```java
+import java.util.concurrent.*;
+
+public class FutureTaskWithExecutor {
+    public static void main(String[] args) throws Exception {
+        Callable<String> task = () -> {
+            Thread.sleep(1000);
+            return "任务执行完毕";
+        };
+
+        FutureTask<String> futureTask = new FutureTask<>(task);
+
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.submit(futureTask);
+
+        System.out.println("主线程做其他任务...");
+
+        // 获取任务结果
+        String result = futureTask.get();
+        System.out.println("结果: " + result);
+
+        executor.shutdown();
+    }
+}
+
+```
+
+**运行结果：**
+
+```text
+主线程做其他任务...
+结果: 任务执行完毕
+```
+
+------
+
+### 13.4 FutureTask 的核心功能
+
+1、**任务执行与结果获取**
+
+（1）FutureTask 可用于异步任务的执行与结果返回。
+
+（2）可以通过 get() 方法获取结果。
+
+2、**任务状态检查**
+
+（1）可以通过 isDone() 判断任务是否完成。
+
+（2）可以通过 isCancelled() 判断任务是否被取消。
+
+3、**取消任务**
+
+（1）通过 cancel() 方法取消任务的执行。
+
+（2）如果任务已开始运行但未完成，取决于 mayInterruptIfRunning 参数是否允许中断。
+
+------
+
+### 13.5 与 Future 的对比
+
+| 特性           | Future                             | FutureTask                           |
+| -------------- | ---------------------------------- | ------------------------------------ |
+| **功能范围**   | 仅表示任务的结果，依赖其他工具运行 | 同时表示任务的结果，并可直接执行任务 |
+| **是否可执行** | 不可直接执行，仅表示结果           | 可直接通过线程或线程池执行任务       |
+| **状态管理**   | 依赖外部任务执行器                 | 内部维护任务状态                     |
+
+------
+
+### 13.6 注意事项
+
+1、**阻塞问题**：
+
+- get() 方法是阻塞的，可能导致性能瓶颈。
+- 在需要非阻塞操作时，可以结合 isDone() 使用。
+
+2、**取消任务**：
+
+- 取消操作需确保 mayInterruptIfRunning 为 true，否则无法中断正在运行的任务。
+
+3、**线程安全**：
+
+- FutureTask 是线程安全的，可以被多个线程共享。
+
+------
+
+### 13.7 使用场景总结
+
+1、**复杂任务的并行执行**：
+
+- 适用于需要任务结果的场景，如计算任务、数据处理任务。
+
+2、**懒加载与缓存**：
+
+- 用于延迟加载，避免重复计算。
+
+3、**异步任务管理**：
+
+- 与线程池结合，简化异步任务的管理和结果获取。
