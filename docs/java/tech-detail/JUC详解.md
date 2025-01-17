@@ -3644,3 +3644,281 @@ public class FutureTaskWithExecutor {
 3、**异步任务管理**：
 
 - 与线程池结合，简化异步任务的管理和结果获取。
+
+## 十四、线程池
+
+### 14.1 为什么使用线程池
+
+线程池做的工作主要是控制运行的线程的数量，处理过程中将任务放入队列，然后在线程创建后启动这些任务，如果线程数量超过了最大数量，超出数量的线程排队等候，等其他线程执行完毕，再从队列中取出任务来执行。
+
+**优点：**
+
+**1、线程复用：降低线程创建和销毁的开销，提高性能。**
+
+**2、控制并发：限制最大并发线程数，防止资源耗尽。**
+
+**3、任务排队：可管理任务队列和任务优先级。**
+
+**4、线程管理：集中管理线程，简化编程模型。**
+
+### 14.2 线程池的核心组成
+
+**1、核心线程数（corePoolSize）**：
+
+- 在线程池中保持存活的线程数量，即使线程处于空闲状态。
+
+**2、最大线程数（maximumPoolSize）**：
+
+- 线程池允许创建的最大线程数。
+
+**3、任务队列（BlockingQueue）**：
+
+- 保存等待执行的任务。
+
+**4、线程工厂（ThreadFactory）**：
+
+- 定制线程的创建方式，如设置线程名、优先级。
+
+**5、拒绝策略（RejectedExecutionHandler）**：
+
+- 当线程池无法接受新任务时，采用的处理策略（如抛异常或丢弃任务）。
+
+**6、线程存活时间（keepAliveTime）**：
+
+- 超出核心线程数量的线程在空闲状态下保持存活的时间。
+
+### 14.3 线程池的实现类
+
+Java 提供了 Executor 框架和多种线程池实现类：
+
+1、Executors 工具类：
+
+提供了多种预定义线程池工厂方法：
+
+**newFixedThreadPool()：**固定大小线程池。可以控制线程最大并发数，超出的线程会在队列中等待。
+
+**newCachedThreadPool()：**可缓存线程池，适合短时大量任务。
+
+**newSingleThreadExecutor()：**单线程池，所有任务按顺序执行。
+
+**newScheduledThreadPool()：**支持定时和周期性任务的线程池。
+
+2、ThreadPoolExecutor（核心实现）：
+
+是 Java 提供的线程池实现类，灵活且可定制。
+
+#### 14.3.1 Executors 工具类
+
+##### 1、newFixedThreadPool()
+
+newFixedThreadPool创建的线程池corePoolSize和maximumPoolSize值是相等的。**它使用的是LinkedBlockingQueue；适用于执行长期的任务，性能好很多。**
+
+示例代码：
+
+```java
+public class MyThreadPoolDemo {
+    public static void main(String[] args) {
+        //三种方法底层都使用了ThreadPoolExecutor类
+        //一池5个线程
+        ExecutorService threadPool = Executors.newFixedThreadPool(5);
+        // 模拟10个用户来办理业务，每个用户就是一个来自外部的请求线程
+        try {
+            for (int i = 1; i <= 10; i++) {
+                threadPool.execute(() -> {
+                    System.out.println(Thread.currentThread().getName() + "\t 办理业务");
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            threadPool.shutdown();
+        }
+    }
+}
+
+```
+
+运行结果：
+
+```text
+pool-1-thread-1	 办理业务
+pool-1-thread-2	 办理业务
+pool-1-thread-3	 办理业务
+pool-1-thread-4	 办理业务
+pool-1-thread-4	 办理业务
+pool-1-thread-4	 办理业务
+pool-1-thread-4	 办理业务
+pool-1-thread-4	 办理业务
+pool-1-thread-4	 办理业务
+pool-1-thread-5	 办理业务
+```
+
+##### 2、newSingleThreadExecutor()
+
+创建一个**单线程化**的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序执行。
+
+newSingleThreadExecutor将corePoolSize和maximumPoolSize值都设置为1，**它使用的是LinkedBlockingQueue；适用于一个任务一个任务执行的场景。**
+
+示例代码：
+
+```java
+public class MyThreadPoolDemo {
+    public static void main(String[] args) {
+        //三种方法底层都使用了ThreadPoolExecutor类
+        //一池1个线程
+        ExecutorService threadPool = Executors.newSingleThreadExecutor();
+        //模拟10个用户来办理业务，每个用户就是一个来自外部的请求线程
+        try {
+            for (int i = 1; i <= 10; i++) {
+                threadPool.execute(() -> {
+                    System.out.println(Thread.currentThread().getName() + "\t 办理业务");
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            threadPool.shutdown();
+        }
+    }
+}
+
+```
+
+运行结果：
+
+```text
+pool-1-thread-1	 办理业务
+pool-1-thread-1	 办理业务
+pool-1-thread-1	 办理业务
+pool-1-thread-1	 办理业务
+pool-1-thread-1	 办理业务
+pool-1-thread-1	 办理业务
+pool-1-thread-1	 办理业务
+pool-1-thread-1	 办理业务
+pool-1-thread-1	 办理业务
+pool-1-thread-1	 办理业务
+```
+
+##### 3、newCachedThreadPool()
+
+创建一个**可缓存线程池**，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。
+
+newCachedThreadPool将corePoolSize值设置为0，将maximumPoolSize设置为Integer.MAX_VALUE，使用的SynchronousQueue，也就是说来了任务就创建线程运行，当线程空闲超过60秒，就销毁线程。**适用于执行很多短期异步的小程序或者负载较轻的服务器。**
+
+代码示例：
+
+```java
+public class MyThreadPoolDemo {
+    public static void main(String[] args) {
+        //三种方法底层都使用了ThreadPoolExecutor类
+        //一池N个线程 随机调度 几个能忙过来就用几个线程
+        ExecutorService threadPool = Executors.newCachedThreadPool();
+        //模拟10个用户来办理业务，每个用户就是一个来自外部的请求线程
+        try {
+            for (int i = 1; i <= 10; i++) {
+                threadPool.execute(() -> {
+                    System.out.println(Thread.currentThread().getName() + "\t 办理业务");
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            threadPool.shutdown();
+        }
+    }
+}
+```
+
+运行结果：
+
+```text
+pool-1-thread-2	 办理业务
+pool-1-thread-3	 办理业务
+pool-1-thread-5	 办理业务
+pool-1-thread-6	 办理业务
+pool-1-thread-2	 办理业务
+pool-1-thread-5	 办理业务
+pool-1-thread-3	 办理业务
+pool-1-thread-1	 办理业务
+pool-1-thread-4	 办理业务
+pool-1-thread-7	 办理业务
+```
+
+
+
+#### 14.3.2 ThreadPoolExecutor 
+
+```java
+public ThreadPoolExecutor(
+    int corePoolSize, 
+    int maximumPoolSize, 
+    long keepAliveTime, 
+    TimeUnit unit, 
+    BlockingQueue<Runnable> workQueue, 
+    ThreadFactory threadFactory, 
+    RejectedExecutionHandler handler
+)
+```
+
+##### **1、参数说明**
+
+- corePoolSize：核心线程数。
+- maximumPoolSize：最大线程数。
+- keepAliveTime ：线程存活时间。
+- unit：线程存活时间的单位。
+- workQueue：任务队列。
+- threadFactory：线程工厂。
+- handler：拒绝策略。
+
+**2、线程池的工作原理**
+
+1、在创建了线程池后，等待提交过来的任务请求
+
+2、当调用execute()方法添加一个请求任务时，线程池会做如下判断：
+
+（1）如果正在运行的线程数量小于corePoolSize，那么马上创建线程运行这个任务
+
+（2）如果正在运行的线程数量大于或等于corePoolSize，那么将这个任务放入队列
+
+（3）如果这时候队列满了且正在运行的线程数量还小于maximumPoolSize，那么还是要创建非核心线程立即运行这个任务
+
+（4）如果队列满了且正在运行的线程数大于或等于maximumPoolSize，那么线程池会启动饱和拒绝策略来执行。
+
+3、当一个线程完成任务时，它会从队列中取下一个任务来执行
+
+4、当一个线程无事可做超过一定的时间（keepAliveTime）时，线程池会判断：
+
+（1）如果当前运行的线程数大于corePoolSize，那么这个线程就被停掉
+
+（2）所以线程池的所有任务完成后它最终会缩到corePoolSize的大小。
+
+##### **3、常见任务队列类型**
+
+- ArrayBlockingQueue：固定大小的阻塞队列。
+- LinkedBlockingQueue：无界阻塞队列。
+- SynchronousQueue：不存储任务，直接交给线程处理。
+
+##### **4、常见拒绝策略**
+
+- AbortPolicy（默认）：直接抛出RejectedExecutionException异常阻止系统正常运行。
+- CallerRunsPolicy：“调用者运行”一种调节机制，该策略既不会抛弃任务，也不会抛出异常，而是将某些任务回退到调用者，从而降低新任务的流量。
+- DiscardPolicy：直接丢弃任务，不予任何处理也不抛出异常。如果允许任务丢失，这是最好的一种解决方案。
+- DiscardOldestPolicy：抛弃队列中等待最久的任务，然后把当前任务加入队列中尝试再次提交当前任务。
+
+
+
+#### 14.3.3 生产环境应该使用哪种线程池
+
+!>生产环境的线程池不允许使用Executors工具类去创建！而是通过ThreadPoolExecutor的方式，这样的处理可以规避资源耗尽的风险。
+
+Executors的线程池对象弊端如下：
+
+（1）FixedThreadPool 和 SingleThreadPool 允许的请求队列长度为 Integer.MAX_VALUE，可能会堆积大量的请求，从而导致OOM。
+
+（2）CachedThreadPool 和 ScheduledThreadPool 允许的创建线程数量为 Integer.MAX_VALUE，可能会创建大量的线程，从而导致OOM。
+
+#### 14.3.4 线程池配置合理线程数
+
+1、CPU密集型：CPU核心数+1
+
+2、IO密集型：CPU核心数*2 或者 CPU核心数/1-阻塞系数，阻塞系数在0.8~0.9之间
