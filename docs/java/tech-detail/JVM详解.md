@@ -1,6 +1,6 @@
 ## 一、JVM体系结构
 
-<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634829895-913c7c53-b745-4da9-a0f3-afdd0a61c850.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_527%2Climit_0"/>
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634829895-913c7c53-b745-4da9-a0f3-afdd0a61c850.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_527%2Climit_0" referrerpolicy="no-referrer"/>
 
 灰色线程私有，大概率不发生垃圾回收
 
@@ -8,7 +8,7 @@
 
 ## 二、 JAVA8 以后的 JVM
 
-<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634830459-eb0c0a9e-69ad-4f06-9d3f-02f347b128b6.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_830%2Climit_0" />
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634830459-eb0c0a9e-69ad-4f06-9d3f-02f347b128b6.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_830%2Climit_0" referrerpolicy="no-referrer"/>
 
 ## 三、如何查看JVM系统默认值
 
@@ -22,7 +22,7 @@
 
 3、java -showversion
 
-<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634831992-8f348f61-f26d-4625-a5e0-007365b1e9f2.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_486%2Climit_0" />
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634831992-8f348f61-f26d-4625-a5e0-007365b1e9f2.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_486%2Climit_0" referrerpolicy="no-referrer"/>
 
 #### 3.1.2 X参数
 
@@ -32,7 +32,7 @@
 
 3、-Xmixed：混合模式
 
-<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634832411-12928aa6-f285-4c1c-96ee-6b7d7956ea22.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_530%2Climit_0" />
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634832411-12928aa6-f285-4c1c-96ee-6b7d7956ea22.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_530%2Climit_0" referrerpolicy="no-referrer"/>
 
 #### 3.1.3 XX参数
 
@@ -60,13 +60,13 @@
 
 先通过jps命令查看java后台运行的进程，然后根据进程编号进行查询。
 
-<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634832634-5a2ee09b-6675-478b-a48d-63249f7c87a0.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_281%2Climit_0" />
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634832634-5a2ee09b-6675-478b-a48d-63249f7c87a0.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_281%2Climit_0" referrerpolicy="no-referrer"/>
 
 （1）公式：jinfo -flag 参数 java进程编号 或 jinfo -flags java进程编号
 
 （2）示例：
 
-<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634833129-5e0de053-e48c-4332-85c8-2d94fec81346.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_830%2Climit_0" />
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634833129-5e0de053-e48c-4332-85c8-2d94fec81346.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_830%2Climit_0" referrerpolicy="no-referrer"/>
 
 **4、题外话**
 
@@ -86,7 +86,7 @@
 
 （2）示例：
 
-<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634833491-043a4ceb-4d07-4179-aa4d-a97637653fdd.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_705%2Climit_0" />
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634833491-043a4ceb-4d07-4179-aa4d-a97637653fdd.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_705%2Climit_0" referrerpolicy="no-referrer"/>
 
 #### 3.2.2 -XX:+PrintFlagsFinal
 
@@ -95,8 +95,7 @@
 （1）公式：java -XX:+PrintFlagsFinal -version
 
 （2）示例： :=表示修改过的值  =表示初始值
-
-![img](https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634833959-da85e168-a1df-4ccc-a20a-4f2b2838ec00.png)
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634833959-da85e168-a1df-4ccc-a20a-4f2b2838ec00.png" referrerpolicy="no-referrer"/>
 
 #### 3.2.3 -XX:+PrintFlagsFinal
 
@@ -109,8 +108,7 @@
 （1）公式：java -XX:+PrintCommandLineFlags -version
 
 （2）示例：
-
-![img](https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634834206-d89d6022-1ba3-44e2-9237-bcdb35392124.png)
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634834206-d89d6022-1ba3-44e2-9237-bcdb35392124.png"  referrerpolicy="no-referrer"/>
 
 ## 四、Jvm的常用配置参数
 
@@ -137,8 +135,7 @@
 ### 4.6 典型设置案例
 
 -Xms128m -Xmx4096m -Xss1024k -XX:MetaspaceSize=512m -XX:+PrintCommandLineFlags -XX:+PrintGCDetails -XX:+UseSerialGC
-
-![img](https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634834487-a43cfea2-9e41-4d86-9a3f-70bbd786fd1c.png)
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634834487-a43cfea2-9e41-4d86-9a3f-70bbd786fd1c.png" referrerpolicy="no-referrer"/>
 
 ### 4.7 -XX:+PrintGCDetails
 
@@ -147,8 +144,8 @@
 示例：
 
 先设置最大堆内存
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634834697-8542cfcf-3d0e-4659-9905-9a9f1c856376.png" referrerpolicy="no-referrer"/>
 
-![img](https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634834697-8542cfcf-3d0e-4659-9905-9a9f1c856376.png)
 
 然后运行代码：
 
@@ -161,12 +158,12 @@ public class HelloGC {
 ```
 
 结果：
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634835035-9a2a916f-eade-46fd-a02f-880cad3ca752.png" referrerpolicy="no-referrer"/>
 
-![img](https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634835035-9a2a916f-eade-46fd-a02f-880cad3ca752.png)
 
 GC收集日志信息：
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634835596-824eeaba-f669-498c-9f24-4337edc689ec.png" referrerpolicy="no-referrer"/>
 
-![img](https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634835596-824eeaba-f669-498c-9f24-4337edc689ec.png)
 
 ### 4.8 -XX:SurvivorRatio
 
@@ -175,18 +172,17 @@ GC收集日志信息：
 示例：
 
 默认-XX:SurvivorRatio=8,Eden:S0:S1=8:1:1
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634836045-c8ce5957-1b56-48a3-a7c2-b3521b7ca2c9.png" referrerpolicy="no-referrer"/>
 
-![img](https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634836045-c8ce5957-1b56-48a3-a7c2-b3521b7ca2c9.png)
-
-![img](https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634836257-20e2ee68-5b83-4499-9ec6-b859cab662a2.png)
 
  
 
 假如-XX:SurvivorRatio=4,Eden:S0:S1=4:1:1
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634836570-844a94ed-fd9a-4302-9ea0-2c40e7e7a6e7.png" referrerpolicy="no-referrer"/>
 
-![img](https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634836570-844a94ed-fd9a-4302-9ea0-2c40e7e7a6e7.png)
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634836769-1d5518f9-f94d-4eeb-9139-dae1a45347f3.png" referrerpolicy="no-referrer"/>
 
-![img](https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634836769-1d5518f9-f94d-4eeb-9139-dae1a45347f3.png)
+
 
  
 
@@ -199,14 +195,16 @@ SurvivorRatio值就是设置eden区的比例占多少，S0/S1相同
 示例：
 
 默认-XX:NewRatio = 2新生代占1，老年代占2，年轻代占整个堆的1/3
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634837702-a0e55162-6775-4a06-ae73-0eab49535a9a.png" referrerpolicy="no-referrer"/>
 
-![img](https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634837702-a0e55162-6775-4a06-ae73-0eab49535a9a.png)
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634838181-661c8541-6fb8-44a2-bdfc-a3d5be8ec488.png" referrerpolicy="no-referrer"/>
 
-![img](https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634838181-661c8541-6fb8-44a2-bdfc-a3d5be8ec488.png)
+
 
 假如-XX:NewRatio = 4新生代占1，老年代占4，年轻代占整个堆的1/5
 
-![img](https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634838366-a10d63ff-24c9-4e60-98f7-c75f9ae2337e.png)
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634838366-a10d63ff-24c9-4e60-98f7-c75f9ae2337e.png" referrerpolicy="no-referrer"/>
+
 
 NewRatio的值就是设置老年代的占比，剩下的1给新生代
 
@@ -215,22 +213,23 @@ NewRatio的值就是设置老年代的占比，剩下的1给新生代
 **设置垃圾最大年龄。**如果设置为0的话，则年轻代对象不经过Survivor区，直接进入年老代，对于年老代比较多的应用，可以提高效率。如果将此值设为一个较大值，则年轻代对象会在Survivor区进行多次复制，这样可以增加对象在年轻代的存活时间，增加在年轻代即被回收的概率。
 
 查看默认进入老年代年龄：
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634838722-d84e4e6d-9d1e-404c-bdb8-11fcb833a774.png" referrerpolicy="no-referrer"/>
 
-![img](https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634838722-d84e4e6d-9d1e-404c-bdb8-11fcb833a774.png)
 
 设置最大年龄：
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634838924-dd9a9c0c-d260-4308-b991-7a77f8138513.png" referrerpolicy="no-referrer"/>
 
-![img](https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634838924-dd9a9c0c-d260-4308-b991-7a77f8138513.png)
 
-![img](https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634839274-f1f77b0b-b1f2-4e7d-b23a-381383cca503.png)
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634839274-f1f77b0b-b1f2-4e7d-b23a-381383cca503.png" referrerpolicy="no-referrer"/>
+
 
 java8中最大就是15，自己设置也不能超过15
 
 ## 五、四种引用
 
 整体架构
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634839773-3e4fc62d-271b-4517-85ec-0497d6039904.png" referrerpolicy="no-referrer"/>
 
-![img](https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634839773-3e4fc62d-271b-4517-85ec-0497d6039904.png)
 
 ### 5.1 强引用Reference
 
@@ -319,8 +318,8 @@ java.lang.Object@6acbcfc0
 ```
 
 结果：
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634840302-f22ecdd6-7b11-4f32-aa7f-045cefb176de.png" referrerpolicy="no-referrer"/>
 
- ![img](https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634840302-f22ecdd6-7b11-4f32-aa7f-045cefb176de.png)
 
 **结论：内存不足时，软引用会被回收。**
 
@@ -518,11 +517,11 @@ java.lang.ref.PhantomReference@5b480cf9
 
 ### 5.7 总结
 
-<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634843504-bc619a0d-ddf6-4b2a-b5b3-ef9b64b4df81.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_720%2Climit_0" />
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634843504-bc619a0d-ddf6-4b2a-b5b3-ef9b64b4df81.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_720%2Climit_0"  referrerpolicy="no-referrer"/>
 
 ## 六、OOM
 
-<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634843960-920ab963-3966-4b56-a77f-2ed7d99fa112.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_648%2Climit_0" />
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634843960-920ab963-3966-4b56-a77f-2ed7d99fa112.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_648%2Climit_0"  referrerpolicy="no-referrer"/>
 
 ### 6.1  java.lang.StackOverflowError
 
@@ -737,5 +736,5 @@ public class MetaspaceOOMtest {
 
 运行结果：
 
-<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634849162-760a96e8-afef-4617-9939-b8e18c508f48.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_567%2Climit_0" />
+<img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634849162-760a96e8-afef-4617-9939-b8e18c508f48.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_567%2Climit_0"  referrerpolicy="no-referrer"/>
 
