@@ -1,6 +1,8 @@
 - <span class="sidebar-title">技术详解</span>
   - [JUC详解](/java/tech-detail/JUC详解.md)
   - [IO与NIO详解](/java/tech-detail/IO与NIO详解.md)
+  - [JVM详解](/java/tech-detail/JVM详解.md)
+  - [垃圾回收详解](/java/tech-detail/垃圾回收详解.md)
 - <span class="sidebar-title">功能设计</span>
   - [用户操作日志设计与实现](/java/functional-design/用户操作日志设计与实现.md)
   - [使用切面实现鉴权](/java/functional-design/使用切面进行鉴权.md)
