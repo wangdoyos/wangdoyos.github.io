@@ -194,7 +194,7 @@ SurvivorRatio值就是设置eden区的比例占多少，S0/S1相同
 
 示例：
 
-默认-XX:NewRatio = 2新生代占1，老年代占2，年轻代占整个堆的1/3
+默认-XX:NewRatio = 2新生代占1，老年代占2，年轻代占整个堆的1/3 <br>
 <img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634837702-a0e55162-6775-4a06-ae73-0eab49535a9a.png" referrerpolicy="no-referrer"/>
 
 <img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634838181-661c8541-6fb8-44a2-bdfc-a3d5be8ec488.png" referrerpolicy="no-referrer"/>
