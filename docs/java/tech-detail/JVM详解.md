@@ -94,7 +94,7 @@
 
 （1）公式：java -XX:+PrintFlagsFinal -version
 
-（2）示例： :=表示修改过的值  =表示初始值
+（2）示例： :=表示修改过的值  =表示初始值<br>
 <img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634833959-da85e168-a1df-4ccc-a20a-4f2b2838ec00.png" referrerpolicy="no-referrer"/>
 
 #### 3.2.3 -XX:+PrintFlagsFinal
@@ -143,7 +143,7 @@
 
 示例：
 
-先设置最大堆内存
+先设置最大堆内存 <br>
 <img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634834697-8542cfcf-3d0e-4659-9905-9a9f1c856376.png" referrerpolicy="no-referrer"/>
 
 
@@ -157,11 +157,11 @@ public class HelloGC {
 }
 ```
 
-结果：
+结果：<br>
 <img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634835035-9a2a916f-eade-46fd-a02f-880cad3ca752.png" referrerpolicy="no-referrer"/>
 
 
-GC收集日志信息：
+GC收集日志信息：<br>
 <img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634835596-824eeaba-f669-498c-9f24-4337edc689ec.png" referrerpolicy="no-referrer"/>
 
 
@@ -171,13 +171,13 @@ GC收集日志信息：
 
 示例：
 
-默认-XX:SurvivorRatio=8,Eden:S0:S1=8:1:1
+默认-XX:SurvivorRatio=8,Eden:S0:S1=8:1:1 <br>
 <img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634836045-c8ce5957-1b56-48a3-a7c2-b3521b7ca2c9.png" referrerpolicy="no-referrer"/>
 
 
  
 
-假如-XX:SurvivorRatio=4,Eden:S0:S1=4:1:1
+假如-XX:SurvivorRatio=4,Eden:S0:S1=4:1:1 <br>
 <img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634836570-844a94ed-fd9a-4302-9ea0-2c40e7e7a6e7.png" referrerpolicy="no-referrer"/>
 
 <img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634836769-1d5518f9-f94d-4eeb-9139-dae1a45347f3.png" referrerpolicy="no-referrer"/>
@@ -212,11 +212,11 @@ NewRatio的值就是设置老年代的占比，剩下的1给新生代
 
 **设置垃圾最大年龄。**如果设置为0的话，则年轻代对象不经过Survivor区，直接进入年老代，对于年老代比较多的应用，可以提高效率。如果将此值设为一个较大值，则年轻代对象会在Survivor区进行多次复制，这样可以增加对象在年轻代的存活时间，增加在年轻代即被回收的概率。
 
-查看默认进入老年代年龄：
+查看默认进入老年代年龄：<br>
 <img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634838722-d84e4e6d-9d1e-404c-bdb8-11fcb833a774.png" referrerpolicy="no-referrer"/>
 
 
-设置最大年龄：
+设置最大年龄：<br>
 <img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634838924-dd9a9c0c-d260-4308-b991-7a77f8138513.png" referrerpolicy="no-referrer"/>
 
 
@@ -227,7 +227,7 @@ java8中最大就是15，自己设置也不能超过15
 
 ## 五、四种引用
 
-整体架构
+整体架构<br>
 <img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634839773-3e4fc62d-271b-4517-85ec-0497d6039904.png" referrerpolicy="no-referrer"/>
 
 
@@ -317,7 +317,7 @@ java.lang.Object@6acbcfc0
     }
 ```
 
-结果：
+结果：<br>
 <img src="https://cdn.nlark.com/yuque/0/2022/png/23116580/1657634840302-f22ecdd6-7b11-4f32-aa7f-045cefb176de.png" referrerpolicy="no-referrer"/>
 
 
